@@ -1,0 +1,25 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+      routes:
+        - id: route_01
+          uri: lb:http://sc-producer
+          predicates:
+            - Path=/producer/**
+          filters:
+            - StripPrefix=1
+            - AddRequestParameter=foo, bar
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
