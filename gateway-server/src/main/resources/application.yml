@@ -7,12 +7,12 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true
+          enabled: false
       routes:
         - id: route_01
           uri: lb:http://sc-producer
           predicates:
-            - Path=/producer/**
+            - Path=/SC-PRODUCER/**
           filters:
             - StripPrefix=1
             - AddRequestParameter=foo, bar

@@ -9,3 +9,11 @@
 ![image](https://github.com/skymarlio82/spring-cloud-topic01/blob/master/screens/img01.png)
 - 开始测试，请求网关试图将参数转发到服务producer中去
 ![image](https://github.com/skymarlio82/spring-cloud-topic01/blob/master/screens/img02.png)
+
+## 深度测试
+- 将上图的producer替换成SC-PRODUCER(serviceId)，再试一次
+![image](https://github.com/skymarlio82/spring-cloud-topic01/blob/master/screens/img03.png)
+
+## 结论与设想
+- 如果我们未来期望一种场景，就是转发的contextPath与serviceId一样，然后我们还是希望路由中的断言和过滤器生效，那么只能将spring.cloud.gateway.discovery.locator.enabled关掉
+![image](https://github.com/skymarlio82/spring-cloud-topic01/blob/master/screens/img04.png)
