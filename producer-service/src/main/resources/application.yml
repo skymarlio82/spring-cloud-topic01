@@ -2,8 +2,13 @@ server:
   port: 8081
 spring:
   application:
-    name: sc-producer
+    name: producer
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+management:  endpoints.web.exposure.include: "*"
+  endpoint.loggers.enabled: true
+logging:
+  level:
+    com.whiz.demo.sc.services.producer.web.controller: trace

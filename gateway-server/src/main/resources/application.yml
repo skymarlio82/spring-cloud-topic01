@@ -1,5 +1,6 @@
 server:
   port: 8080
+  servlet:    context-path: /api/apps
 spring:
   application:
     name: gateway-server
@@ -8,13 +9,22 @@ spring:
       discovery:
         locator:
           enabled: false
+          lower-case-service-id: true
+          url-expression: "'lb:http://'+serviceId"
+          predicates:            - name: Path
+              args:                pattern: "'${server.servlet.context-path}/'+serviceId+'/**'"
       routes:
         - id: route_01
-          uri: lb:http://sc-producer
+          uri: lb:http://producer
           predicates:
-            - Path=/SC-PRODUCER/**
+            - name: Path
+              args:
+                patterns:
+                  - ${server.servlet.context-path}/getfoo/**
+                  - ${server.servlet.context-path}/actu-check/producer/**
           filters:
-            - StripPrefix=1
+            - RewritePath=${server.servlet.context-path}/getfoo(?<remaining>.*), $\{remaining}/
+            - RewritePath=${server.servlet.context-path}/actu-check/producer(?<remaining>.*), $\{remaining}/
             - AddRequestParameter=foo, bar
 eureka:
   client:
